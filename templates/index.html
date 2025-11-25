@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Reaper</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .container {
+            border: 1px solid #30363d;
+            padding: 2rem;
+            border-radius: 6px;
+            background-color: #161b22;
+        }
+        h1 { color: #58a6ff; text-align: center; }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            border-radius: 4px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #238636;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        button:hover { background-color: #2ea043; }
+        button:disabled { background-color: #30363d; cursor: not-allowed; }
+        
+        #results { margin-top: 20px; display: none; }
+        .stat-box {
+            display: flex;
+            justify-content: space-between;
+            background: #21262d;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #30363d;
+        }
+        .link-list {
+            list-style: none;
+            padding: 0;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #30363d;
+        }
+        .link-list li {
+            padding: 8px;
+            border-bottom: 1px solid #21262d;
+            word-break: break-all;
+        }
+        .link-list li:last-child { border-bottom: none; }
+        a { color: #58a6ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .error { color: #f85149; margin-top: 10px; text-align: center; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0d1117; }
+        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🕷️ Link Reaper</h1>
+    <p>Target URL:</p>
+    <input type="text" id="urlInput" placeholder="https://example.com" value="https://">
+    <button onclick="startScrape()" id="scrapeBtn">Scrape Links</button>
+    <p id="statusMsg" style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #8b949e;"></p>
+
+    <div id="results">
+        <div class="stat-box">
+            <span>Target: <b id="targetDisplay">...</b></span>
+            <span>Found: <b id="countDisplay" style="color: #3fb950;">0</b></span>
+        </div>
+        <ul class="link-list" id="linkList"></ul>
+    </div>
+</div>
+
+<script>
+    async function startScrape() {
+        const input = document.getElementById('urlInput');
+        const btn = document.getElementById('scrapeBtn');
+        const resultsDiv = document.getElementById('results');
+        const list = document.getElementById('linkList');
+        const status = document.getElementById('statusMsg');
+
+        resultsDiv.style.display = 'none';
+        list.innerHTML = '';
+        status.innerText = 'Initializing crawler...';
+        status.className = '';
+        btn.disabled = true;
+        btn.innerText = 'Crawling...';
+
+        try {
+            const response = await fetch(`/scrape?url=${encodeURIComponent(input.value)}`);
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error || 'Failed to connect');
+
+            document.getElementById('targetDisplay').innerText = data.url;
+            document.getElementById('countDisplay').innerText = data.total_links;
+
+            data.links.forEach(link => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+                list.appendChild(li);
+            });
+
+            resultsDiv.style.display = 'block';
+            status.innerText = 'Scan Complete.';
+
+        } catch (err) {
+            status.innerText = 'Error: ' + err.message;
+            status.className = 'error';
+        } finally {
+            btn.disabled = false;
+            btn.innerText = 'Scrape Links';
+        }
+    }
+</script>
+
+</body>
+</html>
