@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 
-app = Flask(__name__)
+
+app = Flask(__name__, template_folder='templates')
 
 def scrape_links(target_url):
     unique_links = set()
@@ -20,7 +21,6 @@ def scrape_links(target_url):
         for a_tag in soup.find_all('a', href=True):
             href = a_tag['href']
             full_url = urljoin(target_url, href)
-            
             parsed = urlparse(full_url)
             if parsed.scheme in ['http', 'https']:
                 unique_links.add(full_url)
@@ -32,12 +32,11 @@ def scrape_links(target_url):
 
 @app.route('/')
 def home():
-    return "Crawler is ready! Usage: /scrape?url=https://example.com"
+    return render_template('index.html')
 
 @app.route('/scrape')
 def handle_scrape():
     target_url = request.args.get('url')
-    
     if not target_url:
         return jsonify({"error": "Please provide a url parameter"}), 400
     
