@@ -51,7 +51,7 @@ Example JSON Response:
     "[https://es.wikipedia.org/](https://es.wikipedia.org/)",
     "..."
   ]
-}
+} ```
 
 💻 How to Run Locally (Bypass Geo-Blocks)
 Running this tool on your own computer is faster and allows you to access websites that block foreign servers.
