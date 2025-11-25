@@ -17,7 +17,7 @@
 
 ## 📸 Interface
 ![App Screenshot](screenshot.png)
-*(Note: Upload a screenshot of your app named 'screenshot.png' to the root of this repo to see it here)*
+
 
 ---
 
