@@ -1,3 +1,6 @@
+You are absolutely right—the text you pasted is missing the most important part (the "How to Run Locally" section) and the formatting at the bottom is broken.
+I have fixed it. This version below is the 100% complete version.
+Please copy this entire block. It definitely includes the "How to Run Locally" steps this time.
 # 🕷️ Link Reaper: The Ultimate Web Crawler
 
 ![Python](https://img.shields.io/badge/Python-3.9-blue?style=for-the-badge&logo=python)
@@ -5,7 +8,8 @@
 ![Render](https://img.shields.io/badge/Deployed_on-Render-black?style=for-the-badge&logo=render)
 ![Status](https://img.shields.io/badge/Status-Live_&_Hunting-success?style=for-the-badge)
 
-> **A lightweight, high-speed web crawler built for reconnaissance and data gathering.** > Scrapes target URLs, extracts all internal/external links, and returns structured JSON data or a visual report.
+> **A lightweight, high-speed web crawler built for reconnaissance and data gathering.**
+> Scrapes target URLs, extracts all internal/external links, and returns structured JSON data or a visual report.
 
 ---
 
@@ -16,8 +20,8 @@
 ---
 
 ## 📸 Interface
-![App Screenshot](Screenshot.png)
-
+![App Screenshot](screenshot.png)
+*(Note: Upload a screenshot of your app named 'Screenshot.png' to the root of this repo to see it here)*
 
 ---
 
@@ -40,4 +44,51 @@ Want to use this in your own scripts? You don't need the UI. Just hit the endpoi
 
 **Example Request:**
 ```bash
-curl "
+curl "[https://web-crawler-2mk7.onrender.com/scrape?url=https://www.wikipedia.org](https://web-crawler-2mk7.onrender.com/scrape?url=https://www.wikipedia.org)"
+
+Example JSON Response:
+{
+  "url": "[https://www.wikipedia.org](https://www.wikipedia.org)",
+  "total_links": 325,
+  "links": [
+    "[https://en.wikipedia.org/](https://en.wikipedia.org/)",
+    "[https://es.wikipedia.org/](https://es.wikipedia.org/)",
+    "..."
+  ]
+}
+
+💻 How to Run Locally (Bypass Geo-Blocks)
+Running this tool on your own computer is faster and allows you to access websites that block foreign servers.
+1. Clone the Repository
+git clone [https://github.com/5uhag/web-crawler.git](https://github.com/5uhag/web-crawler.git)
+cd web-crawler
+
+2. Install Dependencies
+You need Python installed. Then run:
+pip install -r requirements.txt
+
+3. Run the App
+python app.py
+
+4. Open in Browser
+Go to: http://127.0.0.1:5000
+⚠️ Limitations & Troubleshooting
+1. "Connection Timed Out" on Indian Government Sites
+If you try to scrape websites like karnataka.gov.in or other government portals using the Live Demo, it might fail with a Timeout Error.
+Why? The Live Demo is hosted on Render (USA/Europe Servers). Many government websites use Geo-Blocking to reject all traffic coming from outside their country to prevent cyberattacks.
+The Fix: Run the tool Locally (on your own laptop) using the instructions above. Since your laptop has an Indian IP address, the website will accept your connection.
+2. "403 Forbidden"
+Some websites have advanced anti-bot protection (Cloudflare, Akamai). This simple crawler mimics a browser, but it cannot solve CAPTCHAs or execute complex JavaScript.
+🧠 Tech Stack
+ * Backend: Python 3, Flask
+ * Scraping Engine: BeautifulSoup4, Requests
+ * Frontend: HTML5, CSS3 (Dark Mode), Vanilla JS
+ * Deployment: Gunicorn, Render Cloud
+⚠️ Disclaimer
+This tool is designed for Educational Purposes and Ethical Hacking (Reconnaissance) only.
+ * Do not use this to spam or DDoS websites.
+ * Always respect robots.txt rules on target sites.
+ * The developer is not responsible for misuse of this tool.
+👨‍💻 Created by Suhag
+Passionate about Cybersecurity, Python, and Web Development.
+
