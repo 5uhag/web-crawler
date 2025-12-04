@@ -112,7 +112,7 @@ This tool is designed for Educational Purposes and Ethical Hacking (Reconnaissan
 
 ---
 
-👨‍💻 Created by Suhag
+👨‍💻 Created by [Suhag](https://github.com/5uhag)
 
 Passionate about Cybersecurity, Python, and Web Development.
 
